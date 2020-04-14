@@ -6,6 +6,9 @@ const passport = require('passport');
 // User model
 const User = require('../models/User')
 
+// Application model
+const Apply = require('../models/Application')
+
 // Login Page
 router.get('/login', (req, res) => {res.render('login')});
 
@@ -80,6 +83,68 @@ router.post('/register', (req, res) => {
          });
     }
 });
+
+
+
+
+
+// Application Registration
+
+// app.post("/apply", (req, res) => {
+//     var myApplication = new Apply(req.body);
+//     myApplication.save()
+//       .then(item => {
+//         res.send("item saved to database");
+//       })
+//       .catch(err => {
+//         res.status(400).send("unable to save to database");
+//       });
+//   });
+
+
+// Register Handle
+router.post('/apply', (req, res) => {
+    const { fsname, mdname, lsname, gender, dob, linkedin, address, address2 } = req.body;
+    let errors = [];
+
+    // Check required fields
+    if(!fsname || !mdname || !lsname || !gender || !dob || !linkedin || !address ) {
+        errors.push({msg: 'Please fill in all fields'});
+    }
+
+    if(errors.length > 0) {
+        res.render('register', {
+            errors,
+            fsname, 
+            mdname, 
+            lsname, 
+            gender, 
+            dob, 
+            linkedin, 
+            address, 
+            address2
+        });
+    } else {
+            const newApplication = new Application({
+                fsname, 
+                mdname, 
+                lsname, 
+                gender, 
+                dob, 
+                linkedin, 
+                address, 
+                address2
+            }); newApplication.Save()
+                     .then(user => {
+                         req.flash('success_msg', 'You are now registered and can login')
+                         res.redirect('/users/dashboard')
+                        })
+                     .catch(err => console.log(err));
+                  
+         }
+});
+
+
 
 // Login Handle
 router.post('/login', (req, res, next) => {

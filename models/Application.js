@@ -1,17 +1,37 @@
 const mongoose = require('mongoose');
 
-const ApplicationScehma = new mongoose.Schema ({
-    name: {
+const UserScehma = new mongoose.Schema ({
+    fsname: {
+        type: String,
+        required: true
+    },
+    mdname: {
+        type: String,
+        required: true
+    },
+    lsname: {
+        type: String,
+        required: true
+    },
+    gender: {
+        type: String,
+        required: true
+    },
+    dob: {
+        type: Date,
+        required: true
+    },
+    linkedin: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    address2: {
         type: String,
         required: false
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
     },
     date: {
         type: Date,
@@ -19,6 +39,6 @@ const ApplicationScehma = new mongoose.Schema ({
     }
 });
 
-const Application = mongoose.model('Application', UserScehma);
+const Apply = mongoose.model('Apply', UserScehma);
 
-module.exports = Application;
+module.exports = Apply;
